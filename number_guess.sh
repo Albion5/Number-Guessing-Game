@@ -37,8 +37,8 @@ SAVE_GAME_RESULT() {
 
 GET_USER_GAME_HISTORY() {
   local GAME_HISTORY="$($PSQL "SELECT COUNT(game_id), MIN(guesses) FROM games WHERE user_id = $1 GROUP BY user_id")"
-  IFS='|' read GAMES MAX <<< "$GAME_HISTORY"
-  echo "You have played $GAMES games, and your best game took $MAX guesses."
+  IFS='|' read GAMES BEST <<< "$GAME_HISTORY"
+  echo "You have played $GAMES games, and your best game took $BEST guesses."
 }
 
 GAME() {
