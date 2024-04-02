@@ -2,7 +2,23 @@
 
 PSQL="psql --username=freecodecamp --dbname=game -t --no-align -c"
 MAIN_LOOP() {
-  echo "Game started"
+  if [[ -n "$1" ]]
+  then
+    echo -e "\n$1"
+  fi 
+  read GUESS
+  (( GUESSES+=1 ))
+  if [[ "$GUESS" =~ ^[0-9]+$ ]]
+  then
+    if [[ $GUESS -eq $NUMBER ]]
+    then
+      echo you won!
+    else
+      MAIN_LOOP "you didn't guess"
+    fi
+  else
+    MAIN_LOOP "try again"
+  fi
 }
 
 
@@ -31,7 +47,10 @@ GAME() {
       GAME_HISTORY=$(GET_USER_GAME_HISTORY $USER_ID)
       echo Welcome back, $NAME! $GAME_HISTORY
     fi
-    MAIN_LOOP $USER_ID
+    GUESSES=0
+    NUMBER=5
+    MAIN_LOOP "Guess the secret number between 1 and 1000:"
+    echo $GUESSES
   fi
 }
 
