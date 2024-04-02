@@ -2,6 +2,15 @@
 
 PSQL="psql --username=freecodecamp --dbname=game -t --no-align -c"
 
+GET_HINT() {
+  if [[ $1 -lt $NUMBER ]]
+  then
+    echo "It's lower than that, guess again:"
+  else
+    echo "It's higher than that, guess again:"
+  fi
+}
+
 MAIN_LOOP() {
   if [[ -n "$1" ]]
   then
@@ -15,7 +24,7 @@ MAIN_LOOP() {
     then
       echo -e "\nYou guessed it in $GUESSES tries. The secret number was $NUMBER. Nice job!"
     else
-      MAIN_LOOP "you didn't guess"
+      MAIN_LOOP "$(GET_HINT $GUESS)"
     fi
   else
     MAIN_LOOP "That is not an integer, guess again:"
@@ -29,7 +38,6 @@ SAVE_GAME_RESULT() {
 GET_USER_GAME_HISTORY() {
   echo "$($PSQL "SELECT game_id FROM games WHERE user_id = $1")"
 }
-
 
 GAME() {
   if [[ -n "$1" ]]
