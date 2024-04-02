@@ -1,8 +1,15 @@
 #!/bin/bash
 
+PSQL="psql --username=freecodecamp --dbname=game -t --no-align -c"
 MAIN_LOOP() {
   echo "Game started"
 }
+
+
+GET_USER_GAME_HISTORY() {
+  echo "$($PSQL "SELECT game_id FROM games WHERE user_id = $1")"
+}
+
 
 GAME() {
   if [[ -n "$1" ]]
@@ -19,21 +26,23 @@ GAME() {
     if [[ -z $USER_ID ]]
     then
       USER_ID=$(REGISTER "$NAME")
-      echo "Welcome, $USER_ID! It looks like this is your first time here."
+      echo "Welcome, $NAME! It looks like this is your first time here."
     else
-      echo Welcome back, $USER_ID!
+      GAME_HISTORY=$(GET_USER_GAME_HISTORY $USER_ID)
+      echo Welcome back, $NAME! $GAME_HISTORY
     fi
-
-    MAIN_LOOP
+    MAIN_LOOP $USER_ID
   fi
 }
 
 REGISTER() {
-  echo 5
+  $PSQL "INSERT INTO users(name) VALUES('$1')"
+  echo $(LOGIN "$1")
+  
 }
 
 LOGIN() {
-  echo
+  echo $($PSQL "SELECT user_id FROM users WHERE name='$1'")
 }
 
 GAME "Welcome to Number Guessing Game!"
