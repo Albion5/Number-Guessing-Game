@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS users (
+    user_id SERIAL PRIMARY KEY, name VARCHAR(22) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS games (
+    game_id SERIAL PRIMARY KEY, user_id INT NOT NULL, guesses INT NOT NULL, FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
