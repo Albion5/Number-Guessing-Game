@@ -62,7 +62,7 @@ GAME() {
       echo Welcome back, $NAME! $GAME_HISTORY
     fi
     GUESSES=0
-    NUMBER=5
+    NUMBER=$(( RANDOM % 1000 + 1 ))
     MAIN_LOOP "Guess the secret number between 1 and 1000:"
     SAVE_GAME_RESULT $USER_ID $GUESSES
   fi
