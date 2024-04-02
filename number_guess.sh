@@ -56,10 +56,10 @@ GAME() {
     if [[ -z $USER_ID ]]
     then
       USER_ID=$(REGISTER "$NAME")
-      echo "Welcome, $USER_ID! It looks like this is your first time here."
+      echo "Welcome, $NAME! It looks like this is your first time here."
     else
-      GAME_HISTORY=$(GET_USER_GAME_HISTORY $USER_ID)
-      echo Welcome back, $NAME! $GAME_HISTORY
+      GAME_HISTORY="$(GET_USER_GAME_HISTORY $USER_ID)"
+      echo "Welcome back, $NAME! $GAME_HISTORY"
     fi
     GUESSES=0
     NUMBER=$(( RANDOM % 1000 + 1 ))
