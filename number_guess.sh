@@ -1,7 +1,6 @@
 #!/bin/bash
 
 MAIN_LOOP() {
-  # later
   echo "Game started"
 }
 
@@ -14,7 +13,7 @@ GAME() {
   read NAME
   if [[ ${#NAME} -gt 22 ]]
   then
-    GAME "Your name should be 22 or less charachters long."
+    GAME "Your name should be 22 or less characters long."
   else
     USER_ID=$(LOGIN "$NAME")
     if [[ -z $USER_ID ]]
